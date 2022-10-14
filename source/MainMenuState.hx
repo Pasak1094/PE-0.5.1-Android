@@ -7,6 +7,7 @@ import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSprite;
 import flixel.FlxCamera;
+import flixel.addons.display.FlxBackdrop;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.effects.FlxFlicker;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -43,7 +44,10 @@ class MainMenuState extends MusicBeatState
 	];
 
 	var magenta:FlxSprite;
-	var camFollow:FlxObject;
+        var chn:FlxSprite;
+        var bgp:FlxSprite;
+	var backdrops:FlxBackdrop = new FlxBackdrop(Paths.image('mainmenu/backdrops'), 0.05, 0.05, true, true);
+        var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
 
@@ -96,6 +100,27 @@ class MainMenuState extends MusicBeatState
 		magenta.color = 0xFFfd719b;
 		add(magenta);
 		// magenta.scrollFactor.set();
+
+                add(backdrops);
+                backdrops.scrollFactor.set(0, 0.5);
+                backdrops.angle = 45;
+
+                bgp = new FlxSprite().loadGraphic(Paths.image('mainmenu/tg'));
+                bgp.antialiasing = ClientPrefs.globalAntialiasing;
+                bgp.x -= 10;
+                bgp.y -= 3;
+                bgp.scale.set('1.2,1.2');
+                add(bgp);
+
+                chn = new FlxSprite();
+                chn.frames = Paths.getSparrowAtlas('mainmenu/rr');
+                chn.antialiasing = ClientPrefs.globalAntialiasing;
+                chn.animation.addByPrefix('rr',"rr idle", 24, true);
+                chn.animation.play('rr');
+                chn.x += 170;
+                chn.y -= 189;
+                chn.scale.set(1.2,1.2);
+                add(chn);
 
 		menuItems = new FlxTypedGroup<FlxSprite>();
 		add(menuItems);
